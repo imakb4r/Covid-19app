@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/counter.dart';
 import 'widgets/my_header.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +13,7 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -79,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
+              )
             ),
             SizedBox(height: 20),
             Padding(
@@ -191,7 +194,24 @@ class HomeScreen extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-            )
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                children: [
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(onSurface: Colors.red),
+                      onPressed: () {
+                        getData();
+                      },
+                      child: Text('Hello Flutter'),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -199,4 +219,20 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+void getData() async{
+ Response response =  await get(Uri.parse('https://api.covid19api'
+     '.com/summary'));
+ print(response.body);
+}
 
+
+
+// Future getData() async{
+//   http.Response response = await http.get(Uri.parse('https://api.covid19api.com/summary'));
+//   if (response.statusCode == 200) {
+//     String data = response.body;
+//     return jsonDecode(data);
+//   } else {
+//     print(response.statusCode);
+//   }
+//}

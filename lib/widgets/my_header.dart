@@ -2,6 +2,7 @@ import 'package:covid_19/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../constant.dart';
+import 'package:covid_19/info_screen.dart';
 
 class MyHeader extends StatelessWidget {
   final String image;
@@ -19,7 +20,7 @@ class MyHeader extends StatelessWidget {
     return ClipPath(
       clipper: MyClipper(),
       child: Container(
-        padding: EdgeInsets.only(left: 40,top: 50, right: 20),
+        padding: EdgeInsets.only(left: 40, top: 50, right: 20),
         height: 350,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -29,8 +30,7 @@ class MyHeader extends StatelessWidget {
               colors: [
                 Color(0xFF3383CD),
                 Color(0xFF11249F),
-              ]
-          ),
+              ]),
           image: DecorationImage(
             image: AssetImage("assets/images/virus.png"),
           ),
@@ -42,10 +42,8 @@ class MyHeader extends StatelessWidget {
               alignment: Alignment.topRight,
               child: GestureDetector(
                 onTap: () {Navigator.push(context, MaterialPageRoute(builder:
-                    (context){return InfoScreen();},),);},
-                child: SvgPicture.asset(
-                    "assets/icons/menu.svg"
-                ),
+                (context){return InfoScreen();},),);},
+                child: SvgPicture.asset("assets/icons/menu.svg"),
               ),
             ),
             SizedBox(height: 20),
@@ -63,9 +61,7 @@ class MyHeader extends StatelessWidget {
                     left: 150,
                     child: Text(
                       "$textTop \n$textBottom",
-                      style: kHeadingTextStyle.copyWith(
-                          color: Colors.white
-                      ),
+                      style: kHeadingTextStyle.copyWith(color: Colors.white),
                     ),
                   ),
                   Container(),
@@ -83,9 +79,9 @@ class MyClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0,size.height - 80);
-    path.quadraticBezierTo(size.width/2, size.height, size.width, size.height
-        - 80);
+    path.lineTo(0, size.height - 80);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 80);
     path.lineTo(size.width, 0);
     path.close();
     return path;
@@ -95,5 +91,4 @@ class MyClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return false;
   }
-
 }

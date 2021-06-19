@@ -2,9 +2,10 @@ import 'package:covid_19/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart';
+//import 'package:http/http.dart';
 import 'widgets/my_header.dart';
 import 'package:http/http.dart' as http;
+//import 'package:geolocator/geolocator.dart';
 
 class InfoScreen extends StatelessWidget {
   @override
@@ -53,14 +54,14 @@ class InfoScreen extends StatelessWidget {
                   Text("Preventions", style: kTitleTextstyle),
                   SizedBox(height: 20),
                   PreventCard(
-                    text:"Since the start of the coronavirus outbreak some "
+                    text: "Since the start of the coronavirus outbreak some "
                         "places have fully embraced wearing facemasks",
-                    image:"assets/images/wear_mask.png",
+                    image: "assets/images/wear_mask.png",
                     title: "Wear a Face Mask",
                   ),
                   PreventCard(
-                    text:"Wash Hand carefully.",
-                    image:"assets/images/wash_hands.png",
+                    text: "Wash Hand carefully.",
+                    image: "assets/images/wash_hands.png",
                     title: "Wash Hands.",
                   ),
                   SizedBox(height: 50),
@@ -75,6 +76,8 @@ class InfoScreen extends StatelessWidget {
 }
 
 class PreventCard extends StatelessWidget {
+  
+
   final String image;
   final String title;
   final String text;
@@ -98,47 +101,47 @@ class PreventCard extends StatelessWidget {
               height: 136,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-                boxShadow:[
-                  BoxShadow(
-                    offset: Offset(0,8),
-                    blurRadius: 24,
-                  )
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 8),
+                      blurRadius: 24,
+                    )
+                  ]),
             ),
             Image.asset(image),
             Positioned(
-              left: 130,
-              child:Container(
-              padding: EdgeInsets.symmetric(horizontal: 20,
-                  vertical: 15),
-              height: 136,
-              width: MediaQuery.of(context).size.width - 170,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text(
-                  title,
-                  style: kTitleTextstyle.copyWith(
-                    fontSize: 16,
-                  ),
-                ),
-                  Text(text,
-                    style: TextStyle(
-                      fontSize:12,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                      child: SvgPicture.asset(
-                          "assets/icons/forward.svg",
+                left: 130,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  height: 136,
+                  width: MediaQuery.of(context).size.width - 170,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        title,
+                        style: kTitleTextstyle.copyWith(
+                          fontSize: 16,
+                        ),
                       ),
-                  )
-               ],
-              ),
-            ))
+                      Text(
+                        text,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: SvgPicture.asset(
+                          "assets/icons/forward.svg",
+                        ),
+                      )
+                    ],
+                  ),
+                ))
           ],
         ),
       ),
@@ -156,9 +159,10 @@ class SymptomsCard extends StatelessWidget {
     this.title,
     this.isActive = false,
   }) : super(key: key);
-  
-  Future getData() async{
-    http.Response response = await http.get(Uri.parse('https://api.covid19api.com/summary'));
+
+  Future getData() async {
+    http.Response response =
+        await http.get(Uri.parse('https://api.covid19api.com/summary'));
     print(response.statusCode);
   }
 
@@ -170,26 +174,26 @@ class SymptomsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
         boxShadow: [
-          isActive ?
-          BoxShadow(
-            offset: Offset(0,10),
-            blurRadius: 20,
-            color: kActiveShadowColor,
-          )
-          : BoxShadow(
-              offset: Offset(0, 3),
-              blurRadius: 6,
-          )
+          isActive
+              ? BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 20,
+                  color: kActiveShadowColor,
+                )
+              : BoxShadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 6,
+                )
         ],
       ),
       child: Column(
         children: [
-          Image.asset(image,height: 90),
+          Image.asset(image, height: 90),
           Text(
             title,
-            style:TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
-            ) ,
+            ),
           )
         ],
       ),
