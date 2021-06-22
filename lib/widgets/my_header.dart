@@ -2,7 +2,6 @@ import 'package:covid_19/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../constant.dart';
-import 'package:covid_19/info_screen.dart';
 
 class MyHeader extends StatelessWidget {
   final String image;

@@ -1,27 +1,48 @@
-import 'dart:convert';
-
+import 'package:covid_19/about.dart';
 import 'package:covid_19/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/counter.dart';
 import 'widgets/my_header.dart';
-//import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart';
+import 'package:covid_19/networking.dart';
+
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
+
+  MyApp({this.covidData});
+  final covidData;
+//This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  int newConfirmed;
+  int newRecovered;
+  int totalConfirmed;
+  int newDeaths;
+  int totalDeaths;
+  int totalRecovered;
+  var lastupdate;
+
   @override
   void initState() {
     super.initState();
     getData();
+  }
+
+  void updateData(dynamic covidData) {
+    newConfirmed = covidData ['Global'] ['NewConfirmed'];
+    totalConfirmed = covidData['Global'] ['TotalConfirmed'];
+    newDeaths = covidData ['Global'] ['NewDeaths'];
+    totalDeaths = covidData ['Global'] ['TotalDeaths'];
+    newRecovered = covidData ['Global'] ['NewRecovered'];
+    totalRecovered = covidData ['Global'] ['TotalRecovered'];
+    lastupdate = covidData ['Global'] ['Date'];
+    //print(totalConfirmed);
   }
 
   Widget build(BuildContext context) {
@@ -144,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                   Counter(
                     color: kInfectedColor,
                     title: "Infected",
-                    number: 1046,
+                    number: 3021,
                   ),
                   Counter(
                     color: kDeathColor,
@@ -206,30 +227,37 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+      appBar: AppBar(
+        title: Text("Hello"),
+      ),
+      drawer: Drawer(
+        child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+        DrawerHeader(
+        child: Text('Drawer Header'),
+        decoration: BoxDecoration(
+          color: Colors.blue,
+        ),
+      ),
+             ListTile(
+                title: Text('About'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return AboutUs();
+                    }));
+        },
+      ),
+    ])));
   }
 }
 
 void getData() async {
-  Response response = await get(Uri.parse('https://api.covid19api'
-      '.com/summary'));
-  if (response.statusCode == 200) {
-    String data = response.body;
-    var newConfirmed = jsonDecode(data) ['Global'] ['NewConfirmed'];
-    print("New Confirmed Cases are $newConfirmed ");
-    var totalConfirmed = jsonDecode(data) ['Global'] ['TotalConfirmed'];
-    print("Total Confirmed Cases are $totalConfirmed ");
-    var newDeaths = jsonDecode(data) ['Global'] ['NewDeaths'];
-    print("New Deaths are $newDeaths ");
-    var totalDeaths = jsonDecode(data) ['Global'] ['TotalDeaths'];
-    print("Total Deaths are $totalDeaths ");
-    var newRecovered = jsonDecode(data) ['Global'] ['NewRecovered'];
-    print("New Recovered are $newRecovered ");
-    var totalRecovered = jsonDecode(data) ['Global'] ['TotalRecovered'];
-    print("New Recovered are $totalRecovered ");
-    var lastupdate = jsonDecode(data) ['Global'] ['Date'];
-    print("Last Updates at $lastupdate ");
-    } else {
-    print(response.statusCode);
-  }
+
+  NetworkHelper networkHelper = NetworkHelper('https://api.covid19api'
+      '.com/summary');
+
+  var covidData = await networkHelper.getData();
+  print(covidData);
+
 }

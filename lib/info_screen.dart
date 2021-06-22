@@ -2,10 +2,7 @@ import 'package:covid_19/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:http/http.dart';
 import 'widgets/my_header.dart';
-import 'package:http/http.dart' as http;
-//import 'package:geolocator/geolocator.dart';
 
 class InfoScreen extends StatelessWidget {
   @override
@@ -159,12 +156,6 @@ class SymptomsCard extends StatelessWidget {
     this.title,
     this.isActive = false,
   }) : super(key: key);
-
-  Future getData() async {
-    http.Response response =
-        await http.get(Uri.parse('https://api.covid19api.com/summary'));
-    print(response.statusCode);
-  }
 
   @override
   Widget build(BuildContext context) {
