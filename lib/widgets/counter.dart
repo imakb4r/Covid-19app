@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:covid_19/constant.dart';
 
 class Counter extends StatelessWidget {
-  final int number;
+  final String number;
   final Color color;
   final String title;
   const Counter({
@@ -39,7 +39,7 @@ class Counter extends StatelessWidget {
         Text(
           "$number", //Active Case API data should be Used Here.
           style: TextStyle(
-            fontSize: 40,
+            fontSize: 22,
             color: color,
           ),
         ),
